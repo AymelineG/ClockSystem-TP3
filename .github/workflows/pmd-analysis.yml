@@ -29,5 +29,5 @@ jobs:
     - name: Upload PMD Report
       uses: actions/upload-artifact@v4
       with:
-        name: PMD-Report
+        name: pmd_report
         path: pmd-report.sarif
