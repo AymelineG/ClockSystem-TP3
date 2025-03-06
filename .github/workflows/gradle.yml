@@ -7,11 +7,14 @@
 
 name: Java CI with Gradle
 
+env:
+  DISPLAY: ":99.0"
+
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,6 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
+    services:
+     xvfb:
+      image: selenium/standalone-chrome:latest
+      options: -e VNC_SERVER=true -e VNC_PORT=5900
 
     steps:
     - uses: actions/checkout@v4
@@ -28,32 +36,24 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
+    - name: Start Xvfb
+      run: Xvfb $DISPLAY -ac -screen 0 1600x1200x24 > /dev/null 2>&1 &
+
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle 8.10
-      uses: gradle/actions/setup-gradle@v3
+      uses: gradle/actions/setup-gradle@v4
       with:
-        gradle-version: '8.10'
-
+        gradle-version: "8.10"
+    
     - name: Build with Gradle
       run: gradle build
 
     - name: Run Tests
-      run: gradle test --info -Djava.awt.headless=true
+      run: gradle test
 
     - name: Upload Test Report
       uses: actions/upload-artifact@v4
       with:
-        name: test-report
-        path: build/reports/tests/
-
-    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
-    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-    #
-    # - name: Setup Gradle
-    #   uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-    #   with:
-    #     gradle-version: '8.9'
-    #
-    # - name: Build with Gradle 8.9
-    #   run: gradle build
+        name: test-reports
+        path: app/build/reports/tests/
