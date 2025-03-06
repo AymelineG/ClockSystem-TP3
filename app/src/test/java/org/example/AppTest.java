@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test void appHasAGreeting() throws FontFormatException, IOException {
+        System.setProperty("java.awt.headless", "true");
 //        App classUnderTest = new App();
         ClockFrame clock = new ClockFrame();
         assertNotNull(clock, "app should have a greeting");
