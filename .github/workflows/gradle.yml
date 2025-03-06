@@ -39,7 +39,7 @@ jobs:
       run: gradle build
 
     - name: Run Tests
-      run: gradle test
+      run: gradle test --info -Djava.awt.headless=true
 
     - name: Upload Test Report
       uses: actions/upload-artifact@v4
