@@ -42,7 +42,7 @@ jobs:
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle 8.10
-      uses: gradle/actions/setup-gradle@v3
+      uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: '8.10'
     
@@ -50,10 +50,10 @@ jobs:
       run: gradle build
 
     - name: Run Tests
-      run: gradle test --info
+      run: gradle test
 
     - name: Upload Test Report
       uses: actions/upload-artifact@v4
       with:
         name: test-report
-        path: build/reports/tests/
+        path: app/build/reports/tests/
