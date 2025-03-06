@@ -36,8 +36,8 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3-0 libasound2
+    - name: Start Xvfb
+      run: Xvfb $DISPLAY -ac -screen 0 1600x1200x24 > /dev/null 2>&1 &
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -45,9 +45,6 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
       with:
         gradle-version: '8.10'
-
-    - name: Start Xvfb
-      run: Xvfb $DISPLAY -ac -screen 0 1600x1200x24 > /dev/null 2>&1 &
     
     - name: Build with Gradle
       run: gradle build
