@@ -1,4 +1,5 @@
 ![Build Status](https://github.com/AymelineG/ClockSystem-TP3/actions/workflows/gradle.yml/badge.svg)
+![PMD Workflow Status](https://img.shields.io/github/workflow/status/AymelineG/ClockSystem-TP3/pmd-analysis/main)
 
 
 # ClockSystem
