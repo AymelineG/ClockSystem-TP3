@@ -24,10 +24,10 @@ jobs:
     - name: Run PMD Static Code Analysis
       uses: pmd/pmd-github-action@v1
       with:
-        rulesets: 'rulesets/java/quickstart.xml'
+        rulesets: 'java-basic'  # Modifié pour utiliser 'java-basic'
 
     - name: Upload PMD Report
       uses: actions/upload-artifact@v4
       with:
-        name: pmd_report
+        name: pmd_report  # Changer le nom de l'artefact pour éviter les espaces
         path: pmd-report.sarif
